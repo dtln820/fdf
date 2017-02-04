@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <fcntl.h>
+#include <stdio.h>
 #include "get_next_line.h"
 
 void	*mlx;
@@ -23,28 +24,19 @@ void	draw_line(int x0, int y0, int x1, int y1)
 
 void	draw_map(int fd)
 {
-	char	*str;
-	int		i;
+	char	*str = NULL;
 
 	while (get_next_line(fd, &str) > 0)
 	{
-		i = 0;
-		while (str[i])
-		{
-			if (ft_isdigit(str[i]))
-			{
-				
-			}
-		}
 	}
 }
 
 int		main(int argc, char *argv[])
 {
 	int fd = open(argv[1], O_RDONLY);
-	mlx = mlx_init();
-	win = mlx_new_window(mlx, 800, 600, "42");
-
-	mlx_loop(mlx);
+	//mlx = mlx_init();
+	//win = mlx_new_window(mlx, 800, 600, "42");
+	draw_map(fd);
+	//mlx_loop(mlx);
 	return (0);
 }
