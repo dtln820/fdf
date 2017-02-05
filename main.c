@@ -1,9 +1,4 @@
-#include <mlx.h>
-#include <stdlib.h>
-#include <math.h>
-#include <fcntl.h>
-#include <stdio.h>
-#include "get_next_line.h"
+#include "fdf.h"
 
 void	*mlx;
 void	*win;
@@ -22,13 +17,33 @@ void	draw_line(int x0, int y0, int x1, int y1)
    }
 }
 
-void	draw_map(int fd)
+void	draw_map(int fd, char *path)
 {
-	char	*str = NULL;
+	char	**str;
+	int		i;
 
-	while (get_next_line(fd, &str) > 0)
-	{
-	}
+	str = (char**)malloc(sizeof(char*) * 1);
+	i = 0;
+	while (get_next_line(fd, &(str[0])) > 0)
+		i++;
+	free(str[0]);
+	free(str);
+	str = (char**)malloc(sizeof(char*) * (i + 1));
+	str[i] = 0;
+	close(fd);
+	fd = open(path, O_RDONLY);
+	i = 0;
+	while (get_next_line(fd, &(str[i])) > 0)
+		i++;
+	draw_points(str);
+}
+
+void	draw_points(char **str)
+{
+	int i;
+	int j;
+
+	
 }
 
 int		main(int argc, char *argv[])
@@ -36,7 +51,7 @@ int		main(int argc, char *argv[])
 	int fd = open(argv[1], O_RDONLY);
 	//mlx = mlx_init();
 	//win = mlx_new_window(mlx, 800, 600, "42");
-	draw_map(fd);
+	draw_map(fd, argv[1]);
 	//mlx_loop(mlx);
 	return (0);
 }
