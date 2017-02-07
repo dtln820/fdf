@@ -35,23 +35,61 @@ void	draw_map(int fd, char *path)
 	i = 0;
 	while (get_next_line(fd, &(str[i])) > 0)
 		i++;
-	draw_points(str);
+	draw_points(str, i);
 }
 
-void	draw_points(char **str)
+void	draw_points(char **str, int line)
 {
-	int i;
-	int j;
+	char	**temp;
+	int		**result;
+	int		i;
+	int		j;
 
-	
+	result = (int**)malloc(sizeof(int*) * line);
+	temp = ft_strsplit(str[i], ' ');
+	i = 0;
+	while (temp[i])
+		i++;
+	j = -1;
+	while (++j < line)
+		result[j] = (int*)malloc(sizeof(int) * i);
+	i = 0;
+	while (str[i])
+	{
+		j = -1;
+		temp = ft_strsplit(str[i], ' ');
+		while(temp[++j])
+			result[i][j] = atoi(temp[j]);
+		i++;
+	}
+	draw_lines(result, line, j);
+}
+
+void	draw_lines(int **result, int lines, int cols)
+{
+	int		i;
+	int		j;
+
+	i = 1;
+	while (i <= lines - 1)
+	{
+		j = 1;
+		while (j <= cols - 1)
+		{
+			draw_line(i * 20, j * 20, (i + 1) * 20, j * 20);
+			draw_line(i * 20, j * 20, i * 20, (j + 1) * 20);
+			j++;
+		}
+		i++;
+	}
 }
 
 int		main(int argc, char *argv[])
 {
 	int fd = open(argv[1], O_RDONLY);
-	//mlx = mlx_init();
-	//win = mlx_new_window(mlx, 800, 600, "42");
+	mlx = mlx_init();
+	win = mlx_new_window(mlx, 800, 600, "42");
 	draw_map(fd, argv[1]);
-	//mlx_loop(mlx);
+	mlx_loop(mlx);
 	return (0);
 }
