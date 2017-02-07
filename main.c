@@ -69,19 +69,64 @@ void	draw_lines(int **result, int lines, int cols)
 {
 	int		i;
 	int		j;
+	int		ver;
+	int		x[3];
+	int		y[3];
+	int		sum;
+	int		zoom;
+	double	u[3];
+	double	v[3];
+	double	alfa;
 
+	alfa = 5.235987756;
+
+	ver = 0;
 	i = 1;
+	sum = 270;
+	zoom = 1;
 	while (i <= lines - 1)
 	{
 		j = 1;
 		while (j <= cols - 1)
 		{
-			draw_line(i * 20, j * 20, (i + 1) * 20, j * 20);
-			draw_line(i * 20, j * 20, i * 20, (j + 1) * 20);
-			draw_line(lines * 20, j * 20, lines * 20, (j + 1) * 20);
+			x[0] = i * 20;
+			x[1] = (i + 1) * 20;
+			x[2] = i * 20;
+			y[0] = j * 20;
+			y[1] = j * 20;
+			y[2] = (j + 1) * 20;
+			u[0] = x[0] * cos(alfa) + y[0] * cos(alfa + 2.0943951024) + result[i-1][j-1] * cos(alfa - 2.0943951024) + sum;
+			v[0] = x[0] * sin(alfa) + y[0] * sin(alfa + 2.0943951024) + result[i-1][j-1] * sin(alfa - 2.0943951024) + sum;
+			u[1] = x[1] * cos(alfa) + y[1] * cos(alfa + 2.0943951024) + result[i][j-1] * cos(alfa - 2.0943951024) + sum;
+			v[1] = x[1] * sin(alfa) + y[1] * sin(alfa + 2.0943951024) + result[i][j-1] * sin(alfa - 2.0943951024) + sum;
+			u[2] = x[2] * cos(alfa) + y[2] * cos(alfa + 2.0943951024) + result[i-1][j] * cos(alfa - 2.0943951024) + sum;
+			v[2] = x[2] * sin(alfa) + y[2] * sin(alfa + 2.0943951024) + result[i-1][j] * sin(alfa - 2.0943951024) + sum;
+			draw_line(v[0],u[0], v[1],u[1]);
+			draw_line(v[0],u[0], v[2], u[2]);
+			if (ver == 0)
+			{
+				x[0] = lines * 20;
+				y[0] = j * 20;
+				x[1] = lines * 20;
+				y[1] = (j + 1) * 20;
+				u[0] = x[0] * cos(alfa) + y[0] * cos(alfa + 2.0943951024) + result[lines-1][j-1] * cos(alfa - 2.0943951024) + sum;
+				v[0] = x[0] * sin(alfa) + y[0] * sin(alfa + 2.0943951024) + result[lines-1][j-1] * sin(alfa - 2.0943951024) + sum;
+				u[1] = x[1] * cos(alfa) + y[1] * cos(alfa + 2.0943951024) + result[lines-1][j] * cos(alfa - 2.0943951024) + sum;
+				v[1] = x[1] * sin(alfa) + y[1] * sin(alfa + 2.0943951024) + result[lines-1][j] * sin(alfa - 2.0943951024) + sum;
+				draw_line(v[0],u[0],v[1],u[1]);
+			}
 			j++;
 		}
-		draw_line(i * 20, cols * 20, (i + 1) * 20, cols * 20);
+		ver = 1;
+		x[0] = i * 20;
+		y[0] = cols * 20;
+		x[1] = (i + 1) * 20;
+		y[1] = cols * 20;
+		u[0] = x[0] * cos(alfa) + y[0] * cos(alfa + 2.0943951024) + result[i-1][cols-1] * cos(alfa - 2.0943951024) + sum;
+		v[0] = x[0] * sin(alfa) + y[0] * sin(alfa + 2.0943951024) + result[i-1][cols-1] * sin(alfa - 2.0943951024) + sum;
+		u[1] = x[1] * cos(alfa) + y[1] * cos(alfa + 2.0943951024) + result[i][cols - 1] * cos(alfa - 2.0943951024) + sum;
+		v[1] = x[1] * sin(alfa) + y[1] * sin(alfa + 2.0943951024) + result[i][cols - 1] * sin(alfa - 2.0943951024) + sum;
+		draw_line(v[0],u[0],v[1],u[1]);
 		i++;
 	}
 }

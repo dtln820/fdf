@@ -28,4 +28,6 @@ char	*ft_strncpy(char *dest, const char *src, size_t n);
 
 void	draw_lines(int **result, int lines, int cols);
 
+void	make_iso(int **result, int lines, int cols);
+
 #endif
