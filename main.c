@@ -78,8 +78,10 @@ void	draw_lines(int **result, int lines, int cols)
 		{
 			draw_line(i * 20, j * 20, (i + 1) * 20, j * 20);
 			draw_line(i * 20, j * 20, i * 20, (j + 1) * 20);
+			draw_line(lines * 20, j * 20, lines * 20, (j + 1) * 20);
 			j++;
 		}
+		draw_line(i * 20, cols * 20, (i + 1) * 20, cols * 20);
 		i++;
 	}
 }
