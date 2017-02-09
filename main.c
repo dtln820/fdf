@@ -133,6 +133,11 @@ void	draw_lines(int **result, int lines, int cols)
 
 int		main(int argc, char *argv[])
 {
+	if (argc < 2)
+	{
+		printf("Usage: %s filename\n", argv[0]);
+		return (0);
+	}
 	int fd = open(argv[1], O_RDONLY);
 	mlx = mlx_init();
 	win = mlx_new_window(mlx, 800, 600, "42");
