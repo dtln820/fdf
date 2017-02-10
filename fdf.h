@@ -28,6 +28,10 @@ char	*ft_strncpy(char *dest, const char *src, size_t n);
 
 void	draw_lines(int **result, int lines, int cols);
 
-void	make_iso(int **result, int lines, int cols);
+void	draw_body(double dvar[], int ivar[], int **result);
+
+void	draw_horizont(double *dvar, int *ivar, int **result, int lines);
+
+void	draw_vertical(double dvar[], int ivar[], int **result, int cols);
 
 #endif
