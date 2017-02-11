@@ -9,17 +9,21 @@
 # include <stdio.h>
 # include "get_next_line.h"
 
-typedef struct  s_info
+typedef struct	s_info
 {
-  void    *mlx;
-  void    *win;
-  double  alfa;
-  int     zoom;
-  int     sum;
-  int     **result;
-  int     lines;
-  int     cols;
-}               t_info;
+  void		*mlx;
+  void		*win;
+  double	alfa;
+  double	zoom;
+  double	scale;
+  double	xrot;
+  double	yrot;
+  int		axe;
+  int		sum;
+  int		**result;
+  int		lines;
+  int		cols;
+}				t_info;
 
 char	*ft_strncpy(char *dest, const char *src, size_t n);
 
@@ -48,5 +52,7 @@ void	draw_horizont(double *dvar, int *ivar, int **result, int lines, t_info *st)
 void	draw_vertical(double dvar[], int ivar[], int **result, int cols, t_info *st);
 
 int   key_hook(int k, void *ss);
+
+void	clear_window(t_info *st);
 
 #endif

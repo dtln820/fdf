@@ -1,14 +1,15 @@
-[*]Scale Z axis points
-[*]Rotation
-[?]Zoom
-[*]Move
+[.]Scale Z axis points
+[.]Rotation
+[.]Zoom
+[.]Move
 [?]Color Map
 [!]Handle files with coords and colors
-[!]Rewrite without global vars
+[.]Rewrite without global vars
 
 * - Recommended
 ? - Not necessary
 ! - MUST HAVE
+. - Done
 
   #type double
   dvar[0] == u[0]

@@ -28,11 +28,34 @@ int		key_hook(int k, void *ss)
 {
 	t_info *st;
 
+	printf("k = %d\n", k);
 	st = (t_info*)ss;
-	if (k == 2)
-		st->sum += 10;
-	else
-		st->sum -= 10;
+	if (k == 119)
+		st->sum -= 20;
+	else if (k == 115)
+		st->sum += 20;
+	else if (k == 122)
+		st->zoom += 0.1;
+	else if (k == 113)
+		st->zoom -= 0.1;
+	else if (k == 101)
+		st->scale += 0.2;
+	else if (k == 114)
+		st->scale -= 0.2;
+	else if (k == 65307)
+		exit(1);
+	else if (k == 102)
+		st->xrot += 0.1;
+	else if (k == 103)
+		st->xrot -= 0.1;
+	else if (k == 99)
+		st->yrot += 0.1;
+	else if (k == 118)
+		st->yrot -= 0.1;
+	else if (k == 97)
+		st->axe -= 20;
+	else if (k == 100)
+		st->axe += 20;
 	return (draw_lines(st));
 }
 
@@ -52,6 +75,10 @@ int		main(int argc, char *argv[])
 	st->zoom  = 1;
 	st->sum = 270;
 	st->alfa = 5.235987756;
+	st->scale = 1;
+	st->xrot = 0;
+	st->yrot = 0;
+	st->axe = 0;
 	mlx_key_hook(st->win, &key_hook, st);
 	mlx_expose_hook(st->win, &draw_lines, st);
 	mlx_loop(st->mlx);
