@@ -2,9 +2,9 @@
 
 void	draw_line(int x0, int y0, int x1, int y1, t_info *st)
 {
-	int dx =  abs(x1-x0), sx = x0<x1 ? 1 : -1;
-	int dy = -abs(y1-y0), sy = y0<y1 ? 1 : -1;
-	int err = dx+dy, e2;
+	int dx =  abs(x1 - x0), sx = x0<x1 ? 1 : -1;
+	int dy = -abs(y1 - y0), sy = y0<y1 ? 1 : -1;
+	int err = dx + dy, e2;
 
 	while(1)
 	{
@@ -30,31 +30,31 @@ int		key_hook(int k, void *ss)
 
 	printf("k = %d\n", k);
 	st = (t_info*)ss;
-	if (k == 119)
+	if (k == 13)
 		st->sum -= 20;
-	else if (k == 115)
+	else if (k == 1)
 		st->sum += 20;
-	else if (k == 122)
+	else if (k == 6)
 		st->zoom += 0.1;
-	else if (k == 113)
+	else if (k == 12)
 		st->zoom -= 0.1;
-	else if (k == 101)
+	else if (k == 14)
 		st->scale += 0.2;
-	else if (k == 114)
+	else if (k == 15)
 		st->scale -= 0.2;
-	else if (k == 65307)
+	else if (k == 53)
 		exit(1);
-	else if (k == 102)
+	else if (k == 3)
 		st->xrot += 0.1;
-	else if (k == 103)
+	else if (k == 5)
 		st->xrot -= 0.1;
-	else if (k == 99)
+	else if (k == 8)
 		st->yrot += 0.1;
-	else if (k == 118)
+	else if (k == 9)
 		st->yrot -= 0.1;
-	else if (k == 97)
+	else if (k == 0)
 		st->axe -= 20;
-	else if (k == 100)
+	else if (k == 2)
 		st->axe += 20;
 	return (draw_lines(st));
 }

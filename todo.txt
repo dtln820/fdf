@@ -5,6 +5,8 @@
 [?]Color Map
 [!]Handle files with coords and colors
 [.]Rewrite without global vars
+[!]Norminette
+[?]Rotate Z axis
 
 * - Recommended
 ? - Not necessary

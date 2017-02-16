@@ -28,6 +28,7 @@ void	draw_points(char **str, int line, t_info *st)
 	int		i;
 	int		j;
 
+	i = 0;
 	result = (int**)malloc(sizeof(int*) * line);
 	temp = ft_strsplit(str[i], ' ');
 	i = 0;
@@ -36,14 +37,13 @@ void	draw_points(char **str, int line, t_info *st)
 	j = -1;
 	while (++j < line)
 		result[j] = (int*)malloc(sizeof(int) * i);
-	i = 0;
-	while (str[i])
+	i = -1;
+	while (str[++i])
 	{
 		j = -1;
 		temp = ft_strsplit(str[i], ' ');
 		while(temp[++j])
 			result[i][j] = atoi(temp[j]);
-		i++;
 	}
 	st->result = result;
 	st->lines = line;
