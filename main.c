@@ -9,8 +9,8 @@ void	draw_line(int x0, int y0, int x1, int y1, t_info *st)
 	while(1)
 	{
 		mlx_pixel_put(st->mlx, st->win, x0, y0, 0xFFFFFF);
-		if (x0==x1 && y0==y1) break;
-		e2 = 2*err;
+		if (x0 == x1 && y0 == y1) break;
+		e2 = 2 * err;
 		if (e2 >= dy)
 		{
 			err += dy;
@@ -28,7 +28,6 @@ int		key_hook(int k, void *ss)
 {
 	t_info *st;
 
-	printf("k = %d\n", k);
 	st = (t_info*)ss;
 	if (k == 13)
 		st->sum -= 20;
@@ -65,7 +64,9 @@ int		main(int argc, char *argv[])
 	st = malloc(sizeof(t_info));
 	if (argc < 2)
 	{
-		printf("Usage: %s filename\n", argv[0]);
+		ft_putstr("Usage: ");
+		ft_putstr(argv[0]);
+		ft_putstr(" filename\n");
 		return (0);
 	}
 	int fd = open(argv[1], O_RDONLY);

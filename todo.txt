@@ -3,7 +3,7 @@
 [.]Zoom
 [.]Move
 [?]Color Map
-[!]Handle files with coords and colors
+[.]Handle files with coords and colors #Seems to workd cause atoi
 [.]Rewrite without global vars
 [!]Norminette
 [?]Rotate Z axis

@@ -55,4 +55,8 @@ int   key_hook(int k, void *ss);
 
 void	clear_window(t_info *st);
 
+void	ft_putstr(char const *s);
+
+int 	ft_atoi(const char *str);
+
 #endif
