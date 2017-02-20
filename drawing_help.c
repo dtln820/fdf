@@ -42,7 +42,7 @@ void	draw_points(char **str, int line, t_info *st)
 	{
 		j = -1;
 		temp = ft_strsplit(str[i], ' ');
-		while(temp[++j])
+		while (temp[++j])
 			result[i][j] = atoi(temp[j]);
 	}
 	st->result = result;
@@ -52,18 +52,29 @@ void	draw_points(char **str, int line, t_info *st)
 
 void	draw_body(double dvar[], int ivar[], int **result, t_info *st)
 {
+	double	tmp[3];
+
+	tmp[0] = dvar[6] + st->xrot;
+	tmp[1] = dvar[6] + fi + st->yrot;
+	tmp[2] = dvar[6] - fi;
 	ivar[0] = ivar[6] * 20;
 	ivar[1] = (ivar[6] + 1) * 20;
 	ivar[2] = ivar[6] * 20;
 	ivar[3] = ivar[7] * 20;
 	ivar[4] = ivar[7] * 20;
 	ivar[5] = (ivar[7] + 1) * 20;
-	dvar[0] = ivar[0] * cos(dvar[6] + st->xrot) + ivar[3] * cos(dvar[6] + fi + st->yrot) + st->scale * result[ivar[6] - 1][ivar[7] - 1] * cos(dvar[6] - fi) + ivar[8];
-	dvar[3] = ivar[0] * sin(dvar[6] + st->xrot) + ivar[3] * sin(dvar[6] + fi + st->yrot) + st->scale * result[ivar[6] - 1][ivar[7] - 1] * sin(dvar[6] - fi) + ivar[8];
-	dvar[1] = ivar[1] * cos(dvar[6] + st->xrot) + ivar[4] * cos(dvar[6] + fi + st->yrot) + st->scale * result[ivar[6]][ivar[7] - 1] * cos(dvar[6] - fi) + ivar[8];
-	dvar[4] = ivar[1] * sin(dvar[6] + st->xrot) + ivar[4] * sin(dvar[6] + fi + st->yrot) + st->scale * result[ivar[6]][ivar[7] - 1] * sin(dvar[6] - fi) + ivar[8];
-	dvar[2] = ivar[2] * cos(dvar[6] + st->xrot) + ivar[5] * cos(dvar[6] + fi + st->yrot) + st->scale * result[ivar[6] - 1][ivar[7]] * cos(dvar[6] - fi) + ivar[8];
-	dvar[5] = ivar[2] * sin(dvar[6] + st->xrot) + ivar[5] * sin(dvar[6] + fi + st->yrot) + st->scale * result[ivar[6] - 1][ivar[7]] * sin(dvar[6] - fi) + ivar[8];
+	dvar[0] = ivar[0] * cos(tmp[0]) + ivar[3] * cos(tmp[1]) +
+	st->scale * result[ivar[6] - 1][ivar[7] - 1] * cos(tmp[2]) + ivar[8];
+	dvar[3] = ivar[0] * sin(tmp[0]) + ivar[3] * sin(tmp[1]) +
+	st->scale * result[ivar[6] - 1][ivar[7] - 1] * sin(tmp[2]) + ivar[8];
+	dvar[1] = ivar[1] * cos(tmp[0]) + ivar[4] * cos(tmp[1]) +
+	st->scale * result[ivar[6]][ivar[7] - 1] * cos(tmp[2]) + ivar[8];
+	dvar[4] = ivar[1] * sin(tmp[0]) + ivar[4] * sin(tmp[1]) +
+	st->scale * result[ivar[6]][ivar[7] - 1] * sin(tmp[2]) + ivar[8];
+	dvar[2] = ivar[2] * cos(tmp[0]) + ivar[5] * cos(tmp[1]) +
+	st->scale * result[ivar[6] - 1][ivar[7]] * cos(tmp[2]) + ivar[8];
+	dvar[5] = ivar[2] * sin(tmp[0]) + ivar[5] * sin(tmp[1]) +
+	st->scale * result[ivar[6] - 1][ivar[7]] * sin(tmp[2]) + ivar[8];
 	draw_line(st->axe + dvar[3] * st->zoom, dvar[0] * st->zoom, st->axe + dvar[4] * st->zoom, dvar[1] * st->zoom, st);
 	draw_line(st->axe + dvar[3] * st->zoom, dvar[0] * st->zoom, st->axe + dvar[5] * st->zoom, dvar[2] * st->zoom, st);
 }
