@@ -1,2 +1,0 @@
-#gcc drawing_help.c ft_strncpy.c ft_strnew.c ft_strsplit.c get_next_line.c main.c -lmlx -lXext -lX11 -lm
-gcc drawing_help.c ft_putstr.c ft_strncpy.c ft_strnew.c ft_strsplit.c get_next_line.c main.c -lmlx -framework OpenGL -framework AppKit
