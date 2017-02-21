@@ -5,120 +5,82 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ddulgher <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/01/25 16:03:05 by ddulgher          #+#    #+#             */
-/*   Updated: 2017/01/27 13:25:26 by ddulgher         ###   ########.fr       */
+/*   Created: 2017/02/16 15:09:54 by ddulgher          #+#    #+#             */
+/*   Updated: 2017/02/16 15:17:09 by ddulgher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
+void	create_space(char **str, int i, int *strsize)
+{
+	char	*temp;
+	int		j;
+
+	j = 0;
+	temp = (char *)malloc(sizeof(char) * (*strsize) * 2);
+	while (j < i)
+	{
+		temp[j] = (*str)[j];
+		j++;
+	}
+	if (*str)
+		free(*str);
+	*strsize *= 2;
+	*str = temp;
+}
+
+void	add_char(char c, int i, char **line, int *strsize)
+{
+	if (i + 1 > (*strsize))
+		create_space(line, i, strsize);
+	(*line)[i] = c;
+}
+
+char	get_char(int fd)
+{
+	static char buff[BUFF_SIZE];
+	int			nr;
+	char		c;
+
+	FV;
+	SV;
+	c = 0;
+	if (prevfd != fd)
+	{
+		index = 0;
+		prevfd = fd;
+		while (index < BUFF_SIZE)
+			buff[index++] = 0;
+		index = 0;
+	}
+	if (index == 0)
+		if ((nr = read(fd, buff, BUFF_SIZE)) == -1 || nr == 0)
+			return (nr);
+	if (index < BUFF_SIZE && buff[index])
+		c = buff[index++];
+	if (index == BUFF_SIZE || buff[index] == '\0')
+		prevfd = -1;
+	return (c);
+}
+
 int		get_next_line(const int fd, char **line)
 {
-	static char	buff[BUFF_SIZE];
-	t_list		*head;
+	int		i;
+	int		strsize;
+	char	c;
 
-	FFD;
-	PPD;
+	i = 0;
+	strsize = BUFF_SIZE + 1;
 	if (fd < 0 || !line || BUFF_SIZE < 0)
 		return (-1);
-	if (pfd != fd && !(var[0] = 0))
-	{
-		pfd = fd;
-		while (var[0] < BUFF_SIZE)
-			buff[var[0]++] = 0;
-		var[0] = 0;
-	}
-	if ((var[0] == 0 || NND || var[0] == var[2]) && !(var[0] = 0))
-		var[2] = read(fd, buff, BUFF_SIZE);
-	if (var[2] == 0 || var[2] < 0)
-		return (var[2]);
-	head = (t_list*)malloc(sizeof(t_list));
-	head->chr = -1;
-	ft_c(&buff, &var, head, fd);
-	fill_the_str(head, var, line, buff);
-	if (buff[var[0]] == '\n')
-		var[0]++;
-	var[1] = 0;
-	delete_nodes(head);
-	return (1);
-}
-
-void	ft_c(char (*b)[BUFF_SIZE], int (*v)[3], t_list *head, int fd)
-{
-	while ((*b)[(*v)[0]] != '\n' && (*b)[(*v)[0]] != '\0' && (*v)[0] < (*v)[2])
-	{
-		add_new_node((*b)[(*v)[0]], head);
-		(*v)[0] = (*v)[0] + 1;
-		(*v)[1] = (*v)[1] + 1;
-	}
-	if ((*v)[0] == BUFF_SIZE && !((*v)[0] = 0))
-	{
-		(*v)[2] = read(fd, *b, BUFF_SIZE);
-		ft_c(b, v, head, fd);
-	}
-}
-
-void	delete_nodes(t_list *head)
-{
-	t_list *current;
-	t_list *temp;
-
-	current = head;
-	while (current->next != NULL)
-	{
-		temp = current;
-		current = current->next;
-		free(temp);
-	}
-	free(current);
-	head = NULL;
-}
-
-void	fill_the_str(t_list *head, int var[3], char **line, char *buff)
-{
-	t_list	*current;
-	int		crw;
-
-	if (buff[var[0]] == '\n' && var[1] == 0)
-	{
-		*line = (char*)malloc(sizeof(char));
-		(*line)[0] = '\0';
-		return ;
-	}
-	current = head;
-	crw = 0;
-	*line = (char*)malloc(sizeof(char) * var[1] + 1);
-	while (current->next != NULL)
-	{
-		(*line)[crw] = current->chr;
-		current = current->next;
-		crw++;
-	}
-	(*line)[crw++] = current->chr;
-	(*line)[crw] = '\0';
-}
-
-void	add_new_node(char val, t_list *head)
-{
-	t_list	*new_node;
-	t_list	*current;
-
-	if (head->chr == -1)
-	{
-		head->chr = val;
-		head->next = NULL;
-		return ;
-	}
-	new_node = (t_list*)malloc(sizeof(t_list));
-	new_node->chr = val;
-	new_node->next = NULL;
-	if (head->next == NULL)
-		head->next = new_node;
-	else
-	{
-		current = head;
-		while (current->next != NULL)
-			current = current->next;
-		current->next = new_node;
-	}
+	*line = (char *)malloc(sizeof(char) * (BUFF_SIZE + 1));
+	while ((c = get_char(fd)) != '\n' && c != -1 && c != 0)
+		add_char(c, i++, line, &strsize);
+	(*line)[i] = '\0';
+	if (c == '\n' && i == 0)
+		return (1);
+	if ((*line)[0] != '\0')
+		return (1);
+	return (c);
 }
